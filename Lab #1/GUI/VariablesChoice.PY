@@ -1,34 +1,29 @@
 import tkinter as tk
+import sys, os
 
-root = tk.Tk()
+# Añadir carpeta raíz al path para que encuentre Exercises
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-root.title("Laboratorio #1 - Matemáticas Discretas")
-root.configure(background = "DARKGRAY")
-root.minsize(200, 200)
-root.maxsize(500, 500)
-root.geometry("400x400+500+200")
+from Exercises import Conjuncion
 
-tk.Label(root, text = "Seleccione El Número De Variables", background = "DARKGRAY", foreground = "WHITE").pack()
-text = tk.Entry(root, width = 20)
-text.pack()
+def open_variable_choice(table_type):
+    def On_Click():
+        try:
+            n = int(text.get())
+            if table_type == 1:  # Conjunción
+                Conjuncion.generate_conjunction(n)
+            else:
+                print("Otras tablas aún no implementadas")
+        except:
+            print("Ingrese un número válido")
 
-def On_Click():
-    TextInput(text)
+    win = tk.Toplevel()
+    win.title("Seleccione Número de Variables")
+    win.configure(background="DARKGRAY")
+    win.geometry("300x200")
 
-Button = tk.Button(root, text = "Accept", foreground = "red", command = On_Click)
-Button.pack()
+    tk.Label(win, text="Ingrese número de variables (2-4)", background="DARKGRAY", foreground="WHITE").pack(pady=10)
+    text = tk.Entry(win, width=20)
+    text.pack()
 
-def TextInput(text):
-    Option = int(text.get())
-    
-    if Option == 2:
-        print("2")
-    elif Option == 3:
-        print("3")
-    elif Option == 4:
-        print("4")
-    else:
-        print("Opción no válida")
-
-
-root.mainloop()
+    tk.Button(win, text="Accept", foreground="red", command=On_Click).pack(pady=10)
